@@ -1,3 +1,22 @@
 from django.contrib import admin
 
-# Register your models here.
+from advertisements.models import Advertisement, Category
+
+
+class AdvertisementAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'author', 'created_at']
+    list_filter = ['author']
+    search_fields = ['title', 'author']
+    fields = ['title', 'author', 'description', 'status', 'category', 'price', 'created_at', 'updated_at', 'images']
+    readonly_fields = ['created_at', 'updated_at']
+
+
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name']
+    list_filter = ['id']
+    search_fields = ['name']
+    fields = ['name']
+
+
+admin.site.register(Advertisement, AdvertisementAdmin)
+admin.site.register(Category)
