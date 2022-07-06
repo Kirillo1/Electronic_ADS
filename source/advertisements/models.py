@@ -14,7 +14,7 @@ class Advertisement(models.Model):
                                  related_name='advertisements')
     status = models.CharField(max_length=30, null=False, blank=False, default='на модерацию', choices=STATUS_CHOICES,
                               verbose_name='Статус')
-    price = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True, verbose_name='Цена')
+    price = models.DecimalField(max_digits=13, decimal_places=2, null=True, blank=True, verbose_name='Цена')
 
     images = models.ImageField(
         verbose_name="Фотография",
