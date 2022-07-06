@@ -4,10 +4,10 @@
 
 {% block nav %}
 
-{#    <li class="nav-item">#}
-{#        <a class="nav-link active" aria-current="page"#}
-{#           href="{% url 'advertisements:advertisement_update_view' advertisement.pk %}">Редактировать</a>#}
-{#    </li>#}
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page"
+           href="{% url 'advertisements:advertisement_update_view' advertisement.pk %}">Редактировать</a>
+    </li>
 {#    <li class="nav-item">#}
 {#        <a class="nav-link active" aria-current="page"#}
 {#           href="{% url 'advertisements:advertisement_delete_view' advertisement.pk %}">Удалить</a>#}
@@ -27,10 +27,10 @@
 
 {#        {% if advertisement.author == user %}#}
 {##}
-{#        <div class="btn-group" role="group" aria-label="Basic mixed styles example">#}
-{#            <button type="button" class="btn btn-warning"><a class="dropdown-item"#}
-{#                                                             href="{% url "advertisements:advertisement_update_view" advertisement.pk %}">Изменить</a>#}
-{#            </button>#}
+        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+            <button type="button" class="btn btn-warning"><a class="dropdown-item"
+                                                             href="{% url "advertisements:advertisement_update_view" advertisement.pk %}">Изменить</a>
+            </button>
 {#            <button type="button" class="btn btn-danger"><a class="dropdown-item"#}
 {#                                                            href="{% url "advertisements:advertisement_delete_view" advertisement.pk %}">Удалить</a>#}
 {#            </button>#}
@@ -39,7 +39,7 @@
 {#                <div>#}
 {#                <button type="submit" class="btn btn-primary"><a class="dropdown-item"#}
 {#                                                                 href="{% url "advertisements:profile_advertisement_detail_view" advertisement.author.id %}">{{ advertisement.author.first_name  }} {{ advertisement.author.last_name  }}</a></button>#}
-{#            </div>#}
+            </div>
 
     </ul><br>
 {% endblock %}

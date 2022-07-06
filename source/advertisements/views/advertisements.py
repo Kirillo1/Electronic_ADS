@@ -1,5 +1,5 @@
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from advertisements.forms import AdvertisementForm
 from advertisements.models import Advertisement
@@ -32,3 +32,13 @@ class AdvertisementCreateView(CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+
+class AdvertisementUpdateView(UpdateView):
+    # permission_required = "webapp.change_article"
+    form_class = AdvertisementForm
+    template_name = "advertisements/advertisement_update.html"
+    model = Advertisement
+
+    # def has_permission(self):
+    #     return self.get_object().author == self.request.user
