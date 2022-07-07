@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}<br/>
+    {% include 'partial/simple_search.html' %}
+
+    {% if advertisements %}<br/>
+        <h1>Объявления</h1><br/>
+    {% else %}
+        <br/><h1>Нет объявлений</h1><br/>
+    {% endif %}
+    {% for advertisement in advertisements %}
+        <div class="card text-center">
+            <div class="card-header">
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Название: {{ advertisement.title }}</h5>
+                <p class="card-text">Категория: {{ advertisement.category }}</p>
+                <p class="card-text">Цена: {{ advertisement.price }}</p>
+                <p class="card-text">Статус: {{ advertisement.get_status_display }}</p>
+
+            </div>
+            <br>
+
+{#            <div class="btn-group" role="group" aria-label="Basic mixed styles example">#}
+{#                <button type="button" class="btn btn-warning"><a class="dropdown-item"#}
+{#                                                                 data-public-id="{% url "api:moderate_status" advertisement.pk %}"#}
+{#                                                                 onclick="public(event)">Одобрить</a>#}
+{#                </button>#}
+{#                <button type="button" class="btn btn-danger"><a class="dropdown-item"#}
+{#                                                                href="{% url "api:rejected_status" advertisement.pk %}"#}
+{#                                                                onclick="cancel(event)">Отклонить</a>#}
+{#                </button>#}
+{##}
+{##}
+{#            </div>#}
+            <br>
+
+
+        </div><br>
+
+
+    {% endfor %}
+
+
+{##    {% if is_paginated %}#}
+{#        {% include 'partial/pagination.html' %}#}
+{#    {% endif %}#}
+
+
+    <script>
+
+
+    </script>
+{% endblock %}

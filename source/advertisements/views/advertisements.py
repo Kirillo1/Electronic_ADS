@@ -1,5 +1,6 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, CreateView, UpdateView
+from django.views.generic import DetailView, CreateView, UpdateView, ListView
 
 from advertisements.forms import AdvertisementForm
 from advertisements.models import Advertisement
@@ -43,3 +44,16 @@ class AdvertisementUpdateView(UpdateView):
 
     # def has_permission(self):
     #     return self.get_object().author == self.request.user
+
+
+class ModeratorListView(PermissionRequiredMixin, ListView):
+    permission_required = "is__staff"
+    model = Advertisement
+    context_object_name = 'advertisements'
+    template_name = "advertisements/moderator_list_view.html"
+    paginate_by = 5
+    ordering = ["created_at"]
+
+    def get_queryset(self):
+        queryset = super(ModeratorListView, self).get_queryset()
+        return queryset.filter(status='for_moderation')
