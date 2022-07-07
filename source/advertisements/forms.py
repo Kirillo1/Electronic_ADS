@@ -8,3 +8,6 @@ class AdvertisementForm(forms.ModelForm):
         model = Advertisement
         fields = ("title", "description", "images", "category", "price")
 
+
+class SearchForm(forms.Form):
+    search = forms.CharField(max_length=30, required=False, label="Найти")

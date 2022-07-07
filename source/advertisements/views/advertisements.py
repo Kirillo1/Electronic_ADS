@@ -1,11 +1,12 @@
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import DetailView, CreateView, UpdateView
 
 from advertisements.forms import AdvertisementForm
 from advertisements.models import Advertisement
+from advertisements.views.base import SearchView
 
 
-class IndexView(ListView):
+class IndexView(SearchView):
     model = Advertisement
     context_object_name = 'advertisements'
     template_name = "advertisements/index.html"
