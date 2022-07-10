@@ -1,7 +1,8 @@
 from django.urls import path
 
 from advertisements.views.advertisements import (IndexView, AdvertisementDetailView,
-                                                 AdvertisementCreateView, AdvertisementUpdateView, ModeratorListView)
+                                                 AdvertisementCreateView, AdvertisementUpdateView,
+                                                 ModeratorListView, ProfileAdvertisementDetailView)
 
 app_name = "advertisements"
 
@@ -11,5 +12,5 @@ urlpatterns = [
     path('advertisement/add/', AdvertisementCreateView.as_view(), name="advertisement_add"),
     path('advertisement/<int:pk>/update/', AdvertisementUpdateView.as_view(), name="advertisement_update_view"),
     path('moderator/', ModeratorListView.as_view(), name="moderator_list_view"),
-
+    path('profile/<int:pk>/', ProfileAdvertisementDetailView.as_view(), name="profile_advertisement_detail_view"),
 ]

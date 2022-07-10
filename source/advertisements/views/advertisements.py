@@ -1,10 +1,12 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import DetailView, CreateView, UpdateView, ListView
 
 from advertisements.forms import AdvertisementForm
 from advertisements.models import Advertisement
 from advertisements.views.base import SearchView
+from django.core.paginator import Paginator
 
 
 class IndexView(SearchView):
@@ -42,6 +44,9 @@ class AdvertisementUpdateView(UpdateView):
     template_name = "advertisements/advertisement_update.html"
     model = Advertisement
 
+    def get_success_url(self):
+        return reverse('advertisements:advertisement_detail_view', kwargs={'pk': self.object.pk})
+
     # def has_permission(self):
     #     return self.get_object().author == self.request.user
 
@@ -57,3 +62,26 @@ class ModeratorListView(PermissionRequiredMixin, ListView):
     def get_queryset(self):
         queryset = super(ModeratorListView, self).get_queryset()
         return queryset.filter(status='for_moderation')
+
+
+class ProfileAdvertisementDetailView(DetailView):
+    model = get_user_model()
+    template_name = 'advertisements/profile_advertisement_detail_view.html'
+    context_object_name = 'profile'
+    paginated_by = 4
+    paginate_related_orphans = 0
+
+    def get_context_data(self, **kwargs):
+        profile = self.get_object().profile
+        print(profile)
+        paginator = Paginator(
+            profile.advertisements.filter(status='published'),
+            self.paginated_by,
+            self.paginate_related_orphans
+        )
+        page_number = self.request.GET.get('page', '1')
+        page = paginator.get_page(page_number)
+        kwargs['page_obj'] = page
+        kwargs['advertisements'] = page.object_list
+        kwargs['is_paginated'] = page.has_other_pages()
+        return super(ProfileAdvertisementDetailView, self).get_context_data(**kwargs)
