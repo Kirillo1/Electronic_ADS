@@ -1,6 +1,10 @@
+from http import HTTPStatus
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
+from django.views import View
 from django.views.generic import DetailView, CreateView, UpdateView, ListView
 
 from advertisements.forms import AdvertisementForm
@@ -85,3 +89,22 @@ class ProfileAdvertisementDetailView(DetailView):
         kwargs['advertisements'] = page.object_list
         kwargs['is_paginated'] = page.has_other_pages()
         return super(ProfileAdvertisementDetailView, self).get_context_data(**kwargs)
+
+
+class AdvertisementRemoveFavoriteView(View):
+    def get(self, request, *args, **kwargs):
+        try:
+            favorite_ads = request.session["favorite_ads"]
+        except KeyError:
+            favorite_ads = []
+
+        ads_id = kwargs.get("pk")
+
+        if ads_id in favorite_ads:
+            favorite_ads.pop(favorite_ads.index(ads_id))
+        else:
+            favorite_ads.append(ads_id)
+
+        request.session["favorite_ads"] = favorite_ads
+        redirect_to = reverse("advertisements:advertisement_detail_view", kwargs={"pk": ads_id})
+        return HttpResponseRedirect(redirect_to)

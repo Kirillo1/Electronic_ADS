@@ -24,6 +24,15 @@
         <li class="list-group-item">Категория: {{ advertisement.category }}</li>
         <li class="list-group-item">Статус: {{ advertisement.get_status_display }}</li>
         <li class="list-group-item">Номер телефона: {{ phone_number }}</li>
+        <br>
+        <a href="{% url "advertisements:favorites_ads" advertisement.pk %}">
+            {% if advertisement.pk in request.session.favorite_ads %}
+                Удалить из избранного
+            {% else %}
+                Добавить в избранное
+            {% endif %}
+
+        </a>
 
         {#        {% if advertisement.author == user %}#}
         {##}
