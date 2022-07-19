@@ -1,8 +1,6 @@
-from http import HTTPStatus
-
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import DetailView, CreateView, UpdateView, ListView
@@ -108,3 +106,13 @@ class AdvertisementRemoveFavoriteView(View):
         request.session["favorite_ads"] = favorite_ads
         redirect_to = reverse("advertisements:advertisement_detail_view", kwargs={"pk": ads_id})
         return HttpResponseRedirect(redirect_to)
+
+
+class AdvertisementFavoriteListView(ListView):
+    model = Advertisement
+    template_name = "advertisements/favorite.html"
+    context_object_name = "advertisements"
+
+    def get_queryset(self):
+        favorite_ads_ids = self.request.session.get("favorite_ads", [])
+        return self.model.objects.filter(id__in=favorite_ads_ids)

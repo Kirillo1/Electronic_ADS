@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{#{% loadstatic %}#}
+{% block lists %}Детальная информация {{ advertisement.title }}{% endblock %}
+
+{% block nav %}
+
+    {#    <li class="nav-item">#}
+    {#        <a class="nav-link active" aria-current="page"#}
+    {#           href="{% url 'advertisements:advertisement_update_view' advertisement.pk %}">Редактировать</a>#}
+    {#    </li>#}
+    {#    <li class="nav-item">#}
+    {#        <a class="nav-link active" aria-current="page"#}
+    {#           href="{% url 'advertisements:advertisement_delete_view' advertisement.pk %}">Удалить</a>#}
+    {#    </li>#}
+
+{% endblock %}
+{% block content %}
+    {% for advertisement in advertisements %}
+        <div class="card text-center">
+            <div class="card-header">
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Название: {{ advertisement.title }}</h5>
+                <p class="card-text">Категория: {{ advertisement.category }}</p>
+                <p class="card-text">Цена: {{ advertisement.price }}</p>
+                <p class="card-text">Статус: {{ advertisement.get_status_display }}</p>
+
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary"><a class="dropdown-item"
+                                                                 href="{% url "advertisements:advertisement_detail_view" advertisement.pk %}">Подробная
+                    информация</a></button>
+            </div>
+            <br>
+        </div><br>
+    {% endfor %}
+{% endblock %}
