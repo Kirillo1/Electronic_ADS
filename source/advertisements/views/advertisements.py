@@ -1,6 +1,9 @@
+from http import HTTPStatus
+
 from django.contrib.auth import get_user_model
-from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.http import HttpResponseRedirect
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.http import HttpResponseRedirect, JsonResponse
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import DetailView, CreateView, UpdateView, ListView
@@ -116,3 +119,31 @@ class AdvertisementFavoriteListView(ListView):
     def get_queryset(self):
         favorite_ads_ids = self.request.session.get("favorite_ads", [])
         return self.model.objects.filter(id__in=favorite_ads_ids)
+
+
+class AdsLikeView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        ads = get_object_or_404(Advertisement, pk=kwargs.get('pk'))
+        if request.user in ads.likes.all():
+            return JsonResponse(
+                {"error": "Лайк уже поставлен"},
+                status=HTTPStatus.FORBIDDEN,
+            )
+        ads.likes.add(request.user)
+        return JsonResponse(
+            {"likes_count": ads.likes.count()}
+        )
+
+
+class AdsUnlikeView(View):
+    def get(self, request, *args, **kwargs):
+        ads = get_object_or_404(Advertisement, pk=kwargs.get('pk'))
+
+        if not ads.likes.filter(id=request.user.id).exists():
+            return JsonResponse(
+                {"error": "Нужно сначала поставить лайк"},
+            )
+        ads.likes.remove(request.user)
+        return JsonResponse(
+            {"likes_count": ads.likes.count()}
+        )

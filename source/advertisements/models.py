@@ -24,6 +24,7 @@ class Advertisement(models.Model):
     )
     author = models.ForeignKey(User, related_name="advertisements", on_delete=models.SET_DEFAULT,
                                default=1, verbose_name="Автор", )
+    likes = models.ManyToManyField(User, related_name="liked_ads")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     published_at = models.DateTimeField(auto_now=True, verbose_name="Дата публикации")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата изменения")
