@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}<br/>
     {% include 'partial/simple_search.html' %}
     {% if advertisements %}<br/>
@@ -18,10 +19,21 @@
             </div>
             <div>
                 {% if user.is_authenticated %}
+                    <p class="like-counter" id="like-counter-{{ advertisement.pk }}">
+                        Лайкнуло: {{ advertisement.likes.count }}</p>
                     {% if user in advertisement.likes.all %}
-                        <a href="{% url "advertisements:unlike_ads" advertisement.pk %}">Не нравится</a>
+                        <a class="like-link" data-ads-id="{{ advertisement.pk }}"
+                           href="{% url "advertisements:unlike_ads" advertisement.pk %}">Не
+                            нравится</a>
+                        <a class="like-link invisible" data-ads-id="{{ advertisement.pk }}"
+                           href="{% url "advertisements:like_ads" advertisement.pk %}">Нравится</a>
+
                     {% else %}
-                        <a href="{% url "advertisements:like_ads" advertisement.pk %}">Нравится</a>
+                        <a class="like-link invisible" data-ads-id="{{ advertisement.pk }}"
+                           href="{% url "advertisements:unlike_ads" advertisement.pk %}">Не
+                            нравится</a>
+                        <a class="like-link" data-ads-id="{{ advertisement.pk }}"
+                           href="{% url "advertisements:like_ads" advertisement.pk %}">Нравится</a>
                     {% endif %}
                 {% endif %}
             </div>
@@ -34,9 +46,9 @@
             {#            {% if admin or advertisement.author == user %}#}
             {##}
             {#                <div class="btn-group" role="group" aria-label="Basic mixed styles example">#}
-                                <button type="button" class="btn btn-warning"><a class="dropdown-item"
-                                                                                 href="{% url "advertisements:advertisement_update_view" advertisement.pk %}">Изменить</a>
-                                </button>
+            <button type="button" class="btn btn-warning"><a class="dropdown-item"
+                                                             href="{% url "advertisements:advertisement_update_view" advertisement.pk %}">Изменить</a>
+            </button>
             {#                    <button type="button" class="btn btn-danger"><a class="dropdown-item"#}
             {#                                                                    href="{% url "advertisements:advertisement_delete_view" advertisement.pk %}">Удалить</a>#}
             {#                    </button>#}
@@ -50,4 +62,35 @@
     {#    {% if is_paginated %}#}
     {#        {% include 'partial/pagination.html' %}#}
     {#    {% endif %}#}
+
+    <script type="text/javascript">
+        async function onClick(event) {
+            event.preventDefault();
+
+            const likeLink = event.target;
+            response = await fetch(likeLink.href);
+
+            let responseData = await response.json()
+            if (response.ok) {
+                const adsId = likeLink.dataset.adsId;
+                let likeCounter = document.getElementById(`like-counter-${adsId}`);
+                likeCounter.innerText = responseData.likes_count;
+                for (likeLinkToToggle of document.querySelectorAll(`a[data-ads-id="${adsId}"]`)) {
+                    likeLinkToToggle.classList.toggle("invisible");
+                }
+            } else {
+                alert(responseData.error);
+            }
+        }
+
+        function onLoad() {
+            for (element of document.getElementsByClassName("like-link")) {
+                element.addEventListener("click", onClick);
+            }
+        }
+
+        window.addEventListener("load", onLoad);
+
+    </script>
+
 {% endblock %}

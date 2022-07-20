@@ -135,7 +135,7 @@ class AdsLikeView(LoginRequiredMixin, View):
         )
 
 
-class AdsUnlikeView(View):
+class AdsUnlikeView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         ads = get_object_or_404(Advertisement, pk=kwargs.get('pk'))
 
