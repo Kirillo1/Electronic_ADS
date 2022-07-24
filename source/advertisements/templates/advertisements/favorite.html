@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {#{% loadstatic %}#}
-{% block lists %}Детальная информация {{ advertisement.title }}{% endblock %}
+{% block lists %}Избранные объявления {{ advertisement.title }}{% endblock %}
 
 {% block nav %}
 
@@ -15,6 +15,11 @@
 
 {% endblock %}
 {% block content %}
+    {% if advertisements %}<br/>
+        <h1>Избранные Объявления</h1><br/>
+    {% else %}
+        <br/><h1>Нет объявлений</h1><br/>
+    {% endif %}
     {% for advertisement in advertisements %}
         <div class="card text-center">
             <div class="card-header">

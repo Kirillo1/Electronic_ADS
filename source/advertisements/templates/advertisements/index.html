@@ -19,21 +19,20 @@
             </div>
             <div>
                 {% if user.is_authenticated %}
-                    <p class="like-counter" id="like-counter-{{ advertisement.pk }}">
-                        Лайкнуло: {{ advertisement.likes.count }}</p>
+                    <p class="like-counter" id="like-counter-{{ advertisement.pk }}">{{ advertisement.likes.count }}</p>
                     {% if user in advertisement.likes.all %}
+                       <a class="like-link invisible" data-ads-id="{{ advertisement.pk }}"
+                        href="{% url "advertisements:like_ads" advertisement.pk %}">Нравится</a>
                         <a class="like-link" data-ads-id="{{ advertisement.pk }}"
                            href="{% url "advertisements:unlike_ads" advertisement.pk %}">Не
                             нравится</a>
-                        <a class="like-link invisible" data-ads-id="{{ advertisement.pk }}"
-                           href="{% url "advertisements:like_ads" advertisement.pk %}">Нравится</a>
-
                     {% else %}
+                        <a class="like-link" data-ads-id="{{ advertisement.pk }}"
+                           href="{% url "advertisements:like_ads" advertisement.pk %}">Нравится</a>
                         <a class="like-link invisible" data-ads-id="{{ advertisement.pk }}"
                            href="{% url "advertisements:unlike_ads" advertisement.pk %}">Не
                             нравится</a>
-                        <a class="like-link" data-ads-id="{{ advertisement.pk }}"
-                           href="{% url "advertisements:like_ads" advertisement.pk %}">Нравится</a>
+
                     {% endif %}
                 {% endif %}
             </div>
