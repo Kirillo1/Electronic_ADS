@@ -6,8 +6,8 @@
     <h1>Вход</h1>
     <form method="post" class="text-center ms-auto me-auto w-50">
         {% csrf_token %}
-        {% if has_error %}
-            <p class="">Введен неверный логин или пароль.</p>
+        {% if form.errors %}
+            <p class="text-danger">Неверное имя пользователя или пароль.</p>
         {% endif %}
         <div class="form-group">
             <label for="username" class="form-label">Логин:</label>
