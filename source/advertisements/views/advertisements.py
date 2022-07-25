@@ -8,7 +8,7 @@ from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import DetailView, CreateView, UpdateView, ListView, DeleteView
 
-from advertisements.forms import AdvertisementForm
+from advertisements.forms import AdsForm
 from advertisements.models import Advertisement
 from advertisements.views.base import SearchView
 from django.core.paginator import Paginator
@@ -27,15 +27,15 @@ class IndexView(SearchView):
 #      queryset = super(IndexView, self).get_queryset()
 #      return queryset.filter(status='published')
 
-class AdvertisementDetailView(DetailView):
-    template_name = 'advertisements/advertisement_detail_view.html'
+class AdsDetailView(DetailView):
+    template_name = 'advertisements/ads_detail_view.html'
     model = Advertisement
 
 
-class AdvertisementCreateView(CreateView):
+class AdsCreateView(CreateView):
     model = Advertisement
-    form_class = AdvertisementForm
-    template_name = "advertisements/advertisement_create.html"
+    form_class = AdsForm
+    template_name = "advertisements/ads_create.html"
     success_url = reverse_lazy('advertisements:index')
 
     def form_valid(self, form):
@@ -43,14 +43,14 @@ class AdvertisementCreateView(CreateView):
         return super().form_valid(form)
 
 
-class AdvertisementUpdateView(UpdateView):
+class AdsUpdateView(UpdateView):
     # permission_required = "webapp.change_article"
-    form_class = AdvertisementForm
-    template_name = "advertisements/advertisement_update.html"
+    form_class = AdsForm
+    template_name = "advertisements/ads_update.html"
     model = Advertisement
 
     def get_success_url(self):
-        return reverse('advertisements:advertisement_detail_view', kwargs={'pk': self.object.pk})
+        return reverse('advertisements:ads_detail_view', kwargs={'pk': self.object.pk})
 
     # def has_permission(self):
     #     return self.get_object().author == self.request.user
@@ -58,29 +58,16 @@ class AdvertisementUpdateView(UpdateView):
 
 class AdsDeleteView(PermissionRequiredMixin, DeleteView):
     model = Advertisement
-    template_name = 'advertisements/advertisement_delete_view.html'
+    template_name = 'advertisements/ads_delete_view.html'
     success_url = reverse_lazy('advertisements:index')
 
     def has_permission(self):
         return self.request.user == self.get_object().author
 
 
-class ModeratorListView(PermissionRequiredMixin, ListView):
-    permission_required = "is__staff"
-    model = Advertisement
-    context_object_name = 'advertisements'
-    template_name = "advertisements/moderator_list_view.html"
-    paginate_by = 5
-    ordering = ["created_at"]
-
-    def get_queryset(self):
-        queryset = super(ModeratorListView, self).get_queryset()
-        return queryset.filter(status='for_moderation')
-
-
-class ProfileAdvertisementDetailView(DetailView):
+class ProfileAdsDetailView(DetailView):
     model = get_user_model()
-    template_name = 'advertisements/profile_advertisement_detail_view.html'
+    template_name = 'advertisements/profile_ads_detail_view.html'
     context_object_name = 'profile'
     paginated_by = 4
     paginate_related_orphans = 0
@@ -98,10 +85,10 @@ class ProfileAdvertisementDetailView(DetailView):
         kwargs['page_obj'] = page
         kwargs['advertisements'] = page.object_list
         kwargs['is_paginated'] = page.has_other_pages()
-        return super(ProfileAdvertisementDetailView, self).get_context_data(**kwargs)
+        return super(ProfileAdsDetailView, self).get_context_data(**kwargs)
 
 
-class AdvertisementRemoveFavoriteView(View):
+class AdsRemoveFavoriteView(View):
     def get(self, request, *args, **kwargs):
         try:
             favorite_ads = request.session["favorite_ads"]
@@ -116,11 +103,11 @@ class AdvertisementRemoveFavoriteView(View):
             favorite_ads.append(ads_id)
 
         request.session["favorite_ads"] = favorite_ads
-        redirect_to = reverse("advertisements:advertisement_detail_view", kwargs={"pk": ads_id})
+        redirect_to = reverse("advertisements:ads_detail_view", kwargs={"pk": ads_id})
         return HttpResponseRedirect(redirect_to)
 
 
-class AdvertisementFavoriteListView(ListView):
+class AdsFavoriteListView(ListView):
     model = Advertisement
     template_name = "advertisements/favorite.html"
     context_object_name = "advertisements"

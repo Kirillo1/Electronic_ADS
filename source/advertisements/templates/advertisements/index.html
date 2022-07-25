@@ -38,7 +38,7 @@
             </div>
             <div>
                 <button type="submit" class="btn btn-primary"><a class="dropdown-item"
-                                                                 href="{% url "advertisements:advertisement_detail_view" advertisement.pk %}">Подробная
+                                                                 href="{% url "advertisements:ads_detail_view" advertisement.pk %}">Подробная
                     информация</a></button>
             </div>
             <br>
@@ -46,10 +46,10 @@
             {##}
             {#                <div class="btn-group" role="group" aria-label="Basic mixed styles example">#}
             <button type="button" class="btn btn-warning"><a class="dropdown-item"
-                                                             href="{% url "advertisements:advertisement_update_view" advertisement.pk %}">Изменить</a>
+                                                             href="{% url "advertisements:ads_update_view" advertisement.pk %}">Изменить</a>
             </button>
                                 <button type="button" class="btn btn-danger"><a class="dropdown-item"
-                                                                                href="{% url "advertisements:advertisement_delete_view" advertisement.pk %}">Удалить</a>
+                                                                                href="{% url "advertisements:ads_delete_view" advertisement.pk %}">Удалить</a>
                                 </button>
             <br>
 

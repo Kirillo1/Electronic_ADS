@@ -38,16 +38,16 @@
         {##}
         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
             <button type="button" class="btn btn-warning"><a class="dropdown-item"
-                                                             href="{% url "advertisements:advertisement_update_view" advertisement.pk %}">Изменить</a>
+                                                             href="{% url "advertisements:ads_update_view" advertisement.pk %}">Изменить</a>
             </button>
                         <button type="button" class="btn btn-danger"><a class="dropdown-item"
-                                                                        href="{% url "advertisements:advertisement_delete_view" advertisement.pk %}">Удалить</a>
+                                                                        href="{% url "advertisements:ads_delete_view" advertisement.pk %}">Удалить</a>
                         </button>
             {#        </div>#}
             {#        {% endif %}#}
             {#               <div>#}
             <button type="submit" class="btn btn-primary"><a class="dropdown-item"
-                                                             href="{% url "advertisements:profile_advertisement_detail_view" advertisement.author.id %}">
+                                                             href="{% url "advertisements:profile_ads_detail_view" advertisement.author.id %}">
                 {{ advertisement.author.first_name }} {{ advertisement.author.last_name }}</a>
             </button>
         </div>

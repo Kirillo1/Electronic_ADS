@@ -1,18 +1,25 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-STATUS_CHOICES = [('for_moderation', 'на модерацию'), ('rejected', 'отклонено'),
-                  ('published', 'опубликовано'), ('delete', 'удалено')]
-
 User = get_user_model()
 
 
 class Advertisement(models.Model):
+    TO_MODERATE = 'MOD'
+    PUBLISHED = 'PUB'
+    REJECTED = 'REJ'
+    TO_DELETE = 'DEL'
+
+    STATUS_CHOICES = [
+        (TO_MODERATE, 'На модерацию'), (PUBLISHED, 'Опубликовано'),
+        (REJECTED, 'Отклонено'), (TO_DELETE, 'На удаление')
+    ]
+
     title = models.CharField(max_length=200, null=False, blank=False, verbose_name="Заголовок")
     description = models.TextField(max_length=2000, null=False, blank=False, verbose_name="Контент")
     category = models.ForeignKey('advertisements.Category', verbose_name="Категории", on_delete=models.CASCADE,
                                  related_name='advertisements')
-    status = models.CharField(max_length=30, null=False, blank=False, default='на модерацию', choices=STATUS_CHOICES,
+    status = models.CharField(max_length=30, default=TO_MODERATE, choices=STATUS_CHOICES,
                               verbose_name='Статус')
     price = models.DecimalField(max_digits=13, decimal_places=2, null=True, blank=True, verbose_name='Цена')
 
@@ -26,7 +33,7 @@ class Advertisement(models.Model):
                                default=1, verbose_name="Автор", )
     likes = models.ManyToManyField(User, related_name="liked_ads")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
-    published_at = models.DateTimeField(auto_now=True, verbose_name="Дата публикации")
+    published_at = models.DateTimeField(null=True, blank=True, verbose_name="Дата публикации")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата изменения")
 
     def __str__(self):
