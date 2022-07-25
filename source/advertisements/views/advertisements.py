@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import View
-from django.views.generic import DetailView, CreateView, UpdateView, ListView
+from django.views.generic import DetailView, CreateView, UpdateView, ListView, DeleteView
 
 from advertisements.forms import AdvertisementForm
 from advertisements.models import Advertisement
@@ -54,6 +54,15 @@ class AdvertisementUpdateView(UpdateView):
 
     # def has_permission(self):
     #     return self.get_object().author == self.request.user
+
+
+class AdsDeleteView(PermissionRequiredMixin, DeleteView):
+    model = Advertisement
+    template_name = 'advertisements/advertisement_delete_view.html'
+    success_url = reverse_lazy('advertisements:index')
+
+    def has_permission(self):
+        return self.request.user == self.get_object().author
 
 
 class ModeratorListView(PermissionRequiredMixin, ListView):

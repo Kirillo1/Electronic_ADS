@@ -17,22 +17,9 @@
                 <p class="card-text">Категория: {{ advertisement.category }}</p>
                 <p class="card-text">Цена: {{ advertisement.price }}</p>
                 <p class="card-text">Статус: {{ advertisement.get_status_display }}</p>
-
             </div>
             <br>
 
-{#            <div class="btn-group" role="group" aria-label="Basic mixed styles example">#}
-{#                <button type="button" class="btn btn-warning"><a class="dropdown-item"#}
-{#                                                                 data-public-id="{% url "api:moderate_status" advertisement.pk %}"#}
-{#                                                                 onclick="public(event)">Одобрить</a>#}
-{#                </button>#}
-{#                <button type="button" class="btn btn-danger"><a class="dropdown-item"#}
-{#                                                                href="{% url "api:rejected_status" advertisement.pk %}"#}
-{#                                                                onclick="cancel(event)">Отклонить</a>#}
-{#                </button>#}
-{##}
-{##}
-{#            </div>#}
             <br>
 
 
@@ -42,9 +29,9 @@
     {% endfor %}
 
 
-{##    {% if is_paginated %}#}
-{#        {% include 'partial/pagination.html' %}#}
-{#    {% endif %}#}
+    {##    {% if is_paginated %}#}
+    {#        {% include 'partial/pagination.html' %}#}
+    {#    {% endif %}#}
 
 
     <script>

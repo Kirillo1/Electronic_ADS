@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form action="{% url "advertisements:advertisement_delete_view" advertisement.pk %}" method="POST">
+        {% csrf_token %}
+        <h2>
+            Удалить объявление: {{ advertisement.title }}?</h2>
+        {% include "partial/form.html" with button_text='Да' %}
+    </form><br/>
+    <a class="btn btn-primary" href="{% url "advertisements:advertisement_detail_view" advertisement.pk %}" role="button">Нет!</a>
+{% endblock %}

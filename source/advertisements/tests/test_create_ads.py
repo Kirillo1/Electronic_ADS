@@ -26,6 +26,4 @@ class TestCreateAds(TestCase):
             author=author,
         )
 
-        print(test_ads)
         test_ads.save()
-
