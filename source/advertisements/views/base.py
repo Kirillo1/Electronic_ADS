@@ -1,7 +1,5 @@
 from django.db.models import Q
-
-from django.views.generic import TemplateView, ListView
-
+from django.views.generic import ListView
 from advertisements.forms import SearchForm
 
 
