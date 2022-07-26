@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from advertisements.models import Advertisement, Category
+from advertisements.models import Advertisement, Category, Comment
 
 
 class AdvertisementAdmin(admin.ModelAdmin):
@@ -18,5 +18,13 @@ class CategoryAdmin(admin.ModelAdmin):
     fields = ['name']
 
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ['id', 'content']
+    list_filter = ['id']
+    search_fields = ['content']
+    fields = ['content']
+
+
 admin.site.register(Advertisement, AdvertisementAdmin)
 admin.site.register(Category)
+admin.site.register(Comment)

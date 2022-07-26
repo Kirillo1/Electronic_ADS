@@ -53,3 +53,20 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
+
+
+class Comment(models.Model):
+    advertisement = models.ForeignKey("advertisements.Advertisement", on_delete=models.CASCADE,
+                                      related_name="comments", verbose_name="Объявление", )
+    author = models.ForeignKey(User, related_name="comments",
+                               on_delete=models.CASCADE, verbose_name="Автор")
+    content = models.TextField(max_length=1000, verbose_name="Контент")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата изменения")
+
+    def __str__(self):
+        return f"{self.content}. {self.author}"
+
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
