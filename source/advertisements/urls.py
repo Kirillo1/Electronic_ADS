@@ -2,7 +2,7 @@ from django.urls import path
 
 from advertisements.views.advertisements import (IndexView, AdsDetailView,
                                                  AdsCreateView, AdsUpdateView,
-                                                 ProfileAdsDetailView,
+                                                 AuthorAdsView,
                                                  AdsRemoveFavoriteView, AdsFavoriteListView,
                                                  AdsLikeView, AdsUnlikeView, AdsDeleteView)
 from advertisements.views.moderator_ads_views import (ModeratorListView, AdsModerPublishView,
@@ -21,7 +21,7 @@ urlpatterns = [
     path('ads/<int:pk>/like', AdsLikeView.as_view(), name='like_ads'),
     path('ads/<int:pk>/unlike', AdsUnlikeView.as_view(), name='unlike_ads'),
     path('moderator/', ModeratorListView.as_view(), name="moderator_list_view"),
-    path('profile/<int:pk>/', ProfileAdsDetailView.as_view(), name="profile_ads_detail_view"),
+    path('author/<int:pk>/', AuthorAdsView.as_view(), name="author_ads_view"),
     path('moderator/<int:pk>/publish', AdsModerPublishView.as_view(), name="ads_publish_view"),
     path('moderator/<int:pk>/reject', AdsModerRejectView.as_view(), name="ads_reject_view"),
 

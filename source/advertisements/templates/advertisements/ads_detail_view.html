@@ -47,7 +47,7 @@
             {#        {% endif %}#}
             {#               <div>#}
             <button type="submit" class="btn btn-primary"><a class="dropdown-item"
-                                                             href="{% url "advertisements:profile_ads_detail_view" advertisement.author.id %}">
+                                                             href="{% url "advertisements:author_ads_view" advertisement.author.id %}">
                 {{ advertisement.author.first_name }} {{ advertisement.author.last_name }}</a>
             </button>
         </div>

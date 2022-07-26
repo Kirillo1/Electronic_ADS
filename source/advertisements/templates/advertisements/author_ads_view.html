@@ -1,11 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Ваш username: {{ user_object.username }}</h1>
-    <p><strong>Имя: </strong>{{ user_object.first_name|default:"Не указан" }}</p><br/>
-    <p><strong>Фамилия: </strong>{{ user_object.last_name|default:"Не указан" }}</p><br/>
-    <p><strong>Номер телефона: </strong>{{ user_object.phone_number|default:"Не указан" }}</p><br/>
-    <p><strong>Email: </strong>{{ user_object.email|default:"Не указан" }}</p><br/>
     {% for advertisement in advertisements %}
         <li class="list-group-item">Описание: {{ advertisement.description }}</li>
         <li class="list-group-item">Цена: {{ advertisement.price }}</li>
@@ -15,9 +10,7 @@
                     <button type="button" class="btn btn-warning"><a class="dropdown-item"
                                                                      href="{% url "advertisements:ads_update_view" advertisement.pk %}">Изменить</a>
                     </button>
-                    <button type="button" class="btn btn-danger"><a class="dropdown-item"
-                                                                    href="{% url "advertisements:advertisement_delete_view" advertisement.pk %}">Удалить</a>
-                    </button>
+
                 </div>
 <br><br>
     {% endfor %}

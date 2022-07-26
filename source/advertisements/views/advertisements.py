@@ -13,6 +13,8 @@ from advertisements.models import Advertisement
 from advertisements.views.base import SearchView
 from django.core.paginator import Paginator
 
+User = get_user_model()
+
 
 class IndexView(SearchView):
     model = Advertisement
@@ -68,27 +70,28 @@ class AdsDeleteView(PermissionRequiredMixin, DeleteView):
         return self.request.user == self.get_object().author
 
 
-class ProfileAdsDetailView(DetailView):
-    model = get_user_model()
-    template_name = 'advertisements/profile_ads_detail_view.html'
-    context_object_name = 'profile'
-    paginated_by = 4
+class AuthorAdsView(DetailView):
+    model = User
+    template_name = 'advertisements/author_ads_view.html'
+    context_object_name = 'advertisements'
+    paginate_related_by = 3
     paginate_related_orphans = 0
 
     def get_context_data(self, **kwargs):
-        profile = self.get_object().profile
-        print(profile)
         paginator = Paginator(
-            profile.advertisements.filter(status='published'),
-            self.paginated_by,
-            self.paginate_related_orphans
+            self.get_object().advertisements.all(),
+            self.paginate_related_by,
+            self.paginate_related_orphans,
         )
-        page_number = self.request.GET.get('page', '1')
+
+        page_number = self.request.GET.get('page', 1)
         page = paginator.get_page(page_number)
+
         kwargs['page_obj'] = page
         kwargs['advertisements'] = page.object_list
         kwargs['is_paginated'] = page.has_other_pages()
-        return super(ProfileAdsDetailView, self).get_context_data(**kwargs)
+
+        return super(AuthorAdsView, self).get_context_data(**kwargs)
 
 
 class AdsRemoveFavoriteView(View):
