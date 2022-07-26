@@ -19,13 +19,16 @@ class IndexView(SearchView):
     context_object_name = 'advertisements'
     template_name = "advertisements/index.html"
     paginate_by = 5
-    search_fields = ["title__icontains", "author__icontains"]
-    ordering = ["-created_at"]
+    search_fields = ["title__icontains"]
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.exclude(
+            status=Advertisement.TO_DELETE).filter(
+            status=Advertisement.PUBLISHED).select_related(
+            'author', 'category').order_by(
+            '-published_at')
 
-# def get_queryset(self):
-#      queryset = super(IndexView, self).get_queryset()
-#      return queryset.filter(status='published')
 
 class AdsDetailView(DetailView):
     template_name = 'advertisements/ads_detail_view.html'
