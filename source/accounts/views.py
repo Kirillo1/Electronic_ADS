@@ -10,7 +10,7 @@ class UserProfileView(DetailView):
     model = User
     template_name = "profile.html"
     context_object_name = "user_object"
-    paginate_related_by = 3
+    paginate_related_by = 5
     paginate_related_orphans = 0
 
     def get_context_data(self, **kwargs):

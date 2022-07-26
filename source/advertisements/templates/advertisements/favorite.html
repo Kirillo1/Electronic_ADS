@@ -20,23 +20,5 @@
     {% else %}
         <br/><h1>Нет объявлений</h1><br/>
     {% endif %}
-    {% for advertisement in advertisements %}
-        <div class="card text-center">
-            <div class="card-header">
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">Название: {{ advertisement.title }}</h5>
-                <p class="card-text">Категория: {{ advertisement.category }}</p>
-                <p class="card-text">Цена: {{ advertisement.price }}</p>
-                <p class="card-text">Статус: {{ advertisement.get_status_display }}</p>
-
-            </div>
-            <div>
-                <button type="submit" class="btn btn-primary"><a class="dropdown-item"
-                                                                 href="{% url "advertisements:ads_detail_view" advertisement.pk %}">Подробная
-                    информация</a></button>
-            </div>
-            <br>
-        </div><br>
-    {% endfor %}
+    {% include 'partial/ads_list.html' %}
 {% endblock %}

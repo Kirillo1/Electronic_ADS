@@ -1,18 +1,5 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {% for advertisement in advertisements %}
-        <li class="list-group-item">Описание: {{ advertisement.description }}</li>
-        <li class="list-group-item">Цена: {{ advertisement.price }}</li>
-        <li class="list-group-item">Категория: {{ advertisement.category }}</li>
-        <li class="list-group-item">Статус: {{ advertisement.get_status_display }}</li>
-                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                    <button type="button" class="btn btn-warning"><a class="dropdown-item"
-                                                                     href="{% url "advertisements:ads_update_view" advertisement.pk %}">Изменить</a>
-                    </button>
-
-                </div>
-<br><br>
-    {% endfor %}
-{#    {% include 'partial/pagination.html' %}#}
+    {% include 'partial/ads_list.html' %}
 {% endblock %}

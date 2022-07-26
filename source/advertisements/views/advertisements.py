@@ -74,7 +74,7 @@ class AuthorAdsView(DetailView):
     model = User
     template_name = 'advertisements/author_ads_view.html'
     context_object_name = 'advertisements'
-    paginate_related_by = 3
+    paginate_related_by = 5
     paginate_related_orphans = 0
 
     def get_context_data(self, **kwargs):

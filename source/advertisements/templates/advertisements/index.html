@@ -2,63 +2,7 @@
 {% load static %}
 {% block content %}<br/>
     {% include 'partial/simple_search.html' %}
-    {% if advertisements %}<br/>
-        <h1>Объявления</h1><br/>
-    {% else %}
-        <br/><h1>Нет объявлений</h1><br/>
-    {% endif %}
-    {% for advertisement in advertisements %}
-        <div class="card text-center">
-            <div class="card-header">
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">Название: {{ advertisement.title }}</h5>
-                <p class="card-text">Категория: {{ advertisement.category }}</p>
-                <p class="card-text">Цена: {{ advertisement.price }}</p>
-                <p class="card-text">Статус: {{ advertisement.get_status_display }}</p>
-            </div>
-            <div>
-                {% if user.is_authenticated %}
-                    <p class="like-counter" id="like-counter-{{ advertisement.pk }}">{{ advertisement.likes.count }}</p>
-                    {% if user in advertisement.likes.all %}
-                       <a class="like-link invisible" data-ads-id="{{ advertisement.pk }}"
-                        href="{% url "advertisements:like_ads" advertisement.pk %}">Нравится</a>
-                        <a class="like-link" data-ads-id="{{ advertisement.pk }}"
-                           href="{% url "advertisements:unlike_ads" advertisement.pk %}">Не
-                            нравится</a>
-                    {% else %}
-                        <a class="like-link" data-ads-id="{{ advertisement.pk }}"
-                           href="{% url "advertisements:like_ads" advertisement.pk %}">Нравится</a>
-                        <a class="like-link invisible" data-ads-id="{{ advertisement.pk }}"
-                           href="{% url "advertisements:unlike_ads" advertisement.pk %}">Не
-                            нравится</a>
-
-                    {% endif %}
-                {% endif %}
-            </div>
-            <div>
-                <button type="submit" class="btn btn-primary"><a class="dropdown-item"
-                                                                 href="{% url "advertisements:ads_detail_view" advertisement.pk %}">Подробная
-                    информация</a></button>
-            </div>
-            <br>
-            {#            {% if admin or advertisement.author == user %}#}
-            {##}
-            {#                <div class="btn-group" role="group" aria-label="Basic mixed styles example">#}
-            <button type="button" class="btn btn-warning"><a class="dropdown-item"
-                                                             href="{% url "advertisements:ads_update_view" advertisement.pk %}">Изменить</a>
-            </button>
-                                <button type="button" class="btn btn-danger"><a class="dropdown-item"
-                                                                                href="{% url "advertisements:ads_delete_view" advertisement.pk %}">Удалить</a>
-                                </button>
-            <br>
-
-
-        </div><br>
-    {% endfor %}
-    {#    {% if is_paginated %}#}
-    {#        {% include 'partial/pagination.html' %}#}
-    {#    {% endif %}#}
+    {% include 'partial/ads_list.html' %}
 
     <script type="text/javascript">
         async function onClick(event) {
