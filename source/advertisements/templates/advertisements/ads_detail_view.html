@@ -56,9 +56,13 @@
                 </div>
                 <div class="card-footer text-muted">
                     {{ comment.created_at }}
-                    <p><a href="{% url "advertisements:comment_update_view" comment.pk %}">Изменить</a>
-                    </p>
-                    <p><a href="{% url "advertisements:comment_delete_view" comment.pk %}">Удалить</a></p>
+                    <br>
+                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                        <button type="button" class="btn btn-warning"><a
+                                href="{% url "advertisements:comment_update_view" comment.id %}">Изменить</a></button>
+                        <button type="button" class="btn btn-danger"><a
+                                href="{% url "advertisements:comment_delete_view" comment.id %}">Удалить</a></button>
+                    </div>
                 </div>
             </div>
             <br>
