@@ -3,13 +3,13 @@ from http import HTTPStatus
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.http import HttpResponseRedirect, JsonResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import DetailView, CreateView, UpdateView, ListView, DeleteView
 
-from advertisements.forms import AdsForm
-from advertisements.models import Advertisement
+from advertisements.forms import AdsForm, CommentForm
+from advertisements.models import Advertisement, Comment
 from advertisements.views.base import SearchView
 from django.core.paginator import Paginator
 
@@ -35,6 +35,12 @@ class IndexView(SearchView):
 class AdsDetailView(DetailView):
     template_name = 'advertisements/ads_detail_view.html'
     model = Advertisement
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        comments = self.object.comments.order_by("-created_at")
+        context['comments'] = comments
+        return context
 
 
 class AdsCreateView(CreateView):

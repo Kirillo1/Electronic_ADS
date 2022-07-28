@@ -31,26 +31,35 @@
             {% else %}
                 Добавить в избранное
             {% endif %}
-
         </a>
-
-        {#        {% if advertisement.author == user %}#}
-        {##}
         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
             <button type="button" class="btn btn-warning"><a class="dropdown-item"
                                                              href="{% url "advertisements:ads_update_view" advertisement.pk %}">Изменить</a>
             </button>
-                        <button type="button" class="btn btn-danger"><a class="dropdown-item"
-                                                                        href="{% url "advertisements:ads_delete_view" advertisement.pk %}">Удалить</a>
-                        </button>
-            {#        </div>#}
-            {#        {% endif %}#}
-            {#               <div>#}
+            <button type="button" class="btn btn-danger"><a class="dropdown-item"
+                                                            href="{% url "advertisements:ads_delete_view" advertisement.pk %}">Удалить</a>
+            </button>
             <button type="submit" class="btn btn-primary"><a class="dropdown-item"
                                                              href="{% url "advertisements:author_ads_view" advertisement.author.id %}">
                 {{ advertisement.author.first_name }} {{ advertisement.author.last_name }}</a>
             </button>
         </div>
+<br><br>
+        <h3>Комментарии</h3>
+        {% for comment in comments %}
+            <div class="card" style="width: 36rem;">
+                <div class="card-header">
+                    Автор: {{ comment.author }}
+                </div>
+                <div class="card-body">
+                    <pre class="card-text">{{ comment.content }}</pre>
+                </div>
+                <div class="card-footer text-muted">
+                    {{ comment.created_at }}
+                </div>
+            </div>
+            <br>
+        {% endfor %}
 
     </ul><br>
 {% endblock %}
