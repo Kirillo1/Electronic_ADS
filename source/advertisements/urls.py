@@ -5,7 +5,8 @@ from advertisements.views.advertisements import (IndexView, AdsDetailView,
                                                  AuthorAdsView,
                                                  AdsRemoveFavoriteView, AdsFavoriteListView,
                                                  AdsLikeView, AdsUnlikeView, AdsDeleteView)
-from advertisements.views.comments import CommentCreateView
+from advertisements.views.comments import (CommentCreateView, CommentUpdateView,
+                                           CommentDeleteView)
 from advertisements.views.moderator_ads_views import (ModeratorListView, AdsModerPublishView,
                                                       AdsModerRejectView)
 
@@ -26,4 +27,6 @@ urlpatterns = [
     path('moderator/<int:pk>/publish', AdsModerPublishView.as_view(), name="ads_publish_view"),
     path('moderator/<int:pk>/reject', AdsModerRejectView.as_view(), name="ads_reject_view"),
     path('ads/<int:pk>/comments/add/', CommentCreateView.as_view(), name="ads_comment_create"),
+    path('comment/<int:pk>/update/', CommentUpdateView.as_view(), name="comment_update_view"),
+    path('comment/<int:pk>/delete/', CommentDeleteView.as_view(), name="comment_delete_view"),
 ]

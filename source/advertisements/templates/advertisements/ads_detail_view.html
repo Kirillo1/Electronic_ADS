@@ -44,7 +44,7 @@
                 {{ advertisement.author.first_name }} {{ advertisement.author.last_name }}</a>
             </button>
         </div>
-<br><br>
+        <br><br>
         <h3>Комментарии</h3>
         {% for comment in comments %}
             <div class="card" style="width: 36rem;">
@@ -56,6 +56,9 @@
                 </div>
                 <div class="card-footer text-muted">
                     {{ comment.created_at }}
+                    <p><a href="{% url "advertisements:comment_update_view" comment.pk %}">Изменить</a>
+                    </p>
+                    <p><a href="{% url "advertisements:comment_delete_view" comment.pk %}">Удалить</a></p>
                 </div>
             </div>
             <br>
