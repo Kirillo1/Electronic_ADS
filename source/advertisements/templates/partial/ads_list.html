@@ -37,12 +37,8 @@
                                                              href="{% url "advertisements:ads_detail_view" advertisement.pk %}">Подробная
                 информация</a></button>
         </div>
-            <li class="nav-item">
-            <a class="nav-link" href="{% url "advertisements:ads_comment_create" advertisement.pk %}">Добавить коммент</a>
-        </li>
+        <a class="nav-link" href="{% url "advertisements:ads_comment_create" advertisement.pk %}">Добавить коммент</a>
         <br>
-        {#            {% if admin or advertisement.author == user %}#}
-        {##}
         <button type="button" class="btn btn-warning"><a class="dropdown-item"
                                                          href="{% url "advertisements:ads_update_view" advertisement.pk %}">Изменить</a>
         </button>

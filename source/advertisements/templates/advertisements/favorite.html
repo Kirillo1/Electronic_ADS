@@ -1,22 +1,8 @@
 {% extends 'base.html' %}
 {#{% loadstatic %}#}
 {% block lists %}Избранные объявления {{ advertisement.title }}{% endblock %}
-
-{% block nav %}
-
-    {#    <li class="nav-item">#}
-    {#        <a class="nav-link active" aria-current="page"#}
-    {#           href="{% url 'advertisements:advertisement_update_view' advertisement.pk %}">Редактировать</a>#}
-    {#    </li>#}
-    {#    <li class="nav-item">#}
-    {#        <a class="nav-link active" aria-current="page"#}
-    {#           href="{% url 'advertisements:advertisement_delete_view' advertisement.pk %}">Удалить</a>#}
-    {#    </li>#}
-
-{% endblock %}
 {% block content %}
     {% if advertisements %}<br/>
-        <h1>Избранные Объявления</h1><br/>
     {% else %}
         <br/><h1>Нет объявлений</h1><br/>
     {% endif %}

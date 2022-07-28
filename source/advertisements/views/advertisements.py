@@ -55,16 +55,12 @@ class AdsCreateView(CreateView):
 
 
 class AdsUpdateView(UpdateView):
-    # permission_required = "webapp.change_article"
     form_class = AdsForm
     template_name = "advertisements/ads_update.html"
     model = Advertisement
 
     def get_success_url(self):
         return reverse('advertisements:ads_detail_view', kwargs={'pk': self.object.pk})
-
-    # def has_permission(self):
-    #     return self.get_object().author == self.request.user
 
 
 class AdsDeleteView(PermissionRequiredMixin, DeleteView):

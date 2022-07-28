@@ -37,13 +37,13 @@
     {% endfor %}
 
 
-    {##    {% if is_paginated %}#}
-    {#        {% include 'partial/pagination.html' %}#}
-    {#    {% endif %}#}
+    {% if is_paginated %}
+        {% include 'partial/pagination.html' %}
+    {% endif %}
 
 
     <script>
-       async function onClick(event) {
+        async function onClick(event) {
             event.preventDefault()
             let url = event.target.dataset.adUrl
             const settings = {
