@@ -9,9 +9,11 @@
 Создайте виртуальное окружение командой
 
 python -m venv venv
+
 Активируйте виртуальное окружение командой
 
 source venv/bin/activate
+
 или
 venv\Scripts\activate (для Windows)
 Установите зависимости командой
