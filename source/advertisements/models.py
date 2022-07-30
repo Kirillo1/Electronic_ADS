@@ -27,7 +27,7 @@ class Advertisement(models.Model):
         verbose_name="Фотография",
         upload_to="uploads/",
         null=True,
-        blank=False
+        blank=True
     )
     author = models.ForeignKey(User, related_name="advertisements", on_delete=models.SET_DEFAULT,
                                default=1, verbose_name="Автор", )

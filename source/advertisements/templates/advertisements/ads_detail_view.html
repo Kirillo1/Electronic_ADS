@@ -1,16 +1,23 @@
 {% extends 'base.html' %}
-{#{% loadstatic %}#}
+{% load static %}
 {% block lists %}Детальная информация {{ advertisement.title }}{% endblock %}
 {% block content %}
     <br><br>
     <ul class="list-group">
         <li class="list-group-item active" aria-current="true">{{ advertisement.title }}</li>
-        <img src="{{ advertisement.images.url }}" width="400" height="300" alt="Картинка">
+        {% if not advertisement.images %}
+            <img src="{% static 'img/no-image.png' %}" width="400" height="300" alt="Картинка">
+
+        {% else %}
+            <img src="{{ advertisement.images.url }}" width="400" height="300" alt="Картинка">
+        {% endif %}
         <li class="list-group-item">Описание: {{ advertisement.description }}</li>
         <li class="list-group-item">Цена: {{ advertisement.price }}</li>
         <li class="list-group-item">Категория: {{ advertisement.category }}</li>
         <li class="list-group-item">Статус: {{ advertisement.get_status_display }}</li>
-        <li class="list-group-item">Номер телефона: {{ phone_number }}</li>
+        <li class="list-group-item">Опубликовано: {{ advertisement.published_at }}</li>
+
+        <li class="list-group-item">Номер телефона: {{ advertisement.author.profile.phone_number }}</li>
         <br>
         <a href="{% url "advertisements:favorites_ads" advertisement.pk %}">
             {% if advertisement.pk in request.session.favorite_ads %}
