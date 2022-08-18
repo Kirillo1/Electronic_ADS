@@ -28,14 +28,10 @@
 
             <button class="request btn btn btn-dark"
                     data-ad-url="{% url 'advertisements:ads_reject_view' advertisement.pk %}">
-                отклонить
+                Отклонить
             </button>
         </div>
-
-
     {% endfor %}
-
-
     {% if is_paginated %}
         {% include 'partial/pagination.html' %}
     {% endif %}
