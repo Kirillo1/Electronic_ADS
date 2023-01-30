@@ -1,14 +1,9 @@
 from django.urls import path
 
-from advertisements.views.advertisements import (IndexView, AdsDetailView,
-                                                 AdsCreateView, AdsUpdateView,
-                                                 AuthorAdsView,
-                                                 AdsRemoveFavoriteView, AdsFavoriteListView,
-                                                 AdsLikeView, AdsUnlikeView, AdsDeleteView)
-from advertisements.views.comments import (CommentCreateView, CommentUpdateView,
-                                           CommentDeleteView)
-from advertisements.views.moderator_ads_views import (ModeratorListView, AdsModerPublishView,
-                                                      AdsModerRejectView)
+from advertisements.views import (IndexView, AdsDetailView, AdsCreateView, AdsUpdateView, AuthorAdsView,
+                                  AdsRemoveFavoriteView, AdsFavoriteListView, AdsLikeView, AdsUnlikeView,
+                                  AdsDeleteView, CommentCreateView, CommentUpdateView, CommentDeleteView,
+                                  ModeratorListView, AdsModerPublishView, AdsModerRejectView)
 
 app_name = "advertisements"
 
