@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.views.generic import DetailView, UpdateView
 
 from accounts.forms import ProfileUpdateForm, UserUpdateForm
+from accounts.models import Profile
 
 User = get_user_model()
 
@@ -25,11 +26,13 @@ class UserProfileView(DetailView):
 
         page_number = self.request.GET.get('page', 1)
         page = paginator.get_page(page_number)
+        user_phone_number = Profile.objects.values('phone_number')
+        for phone_number in user_phone_number:
+            kwargs['phone_number'] = phone_number['phone_number']
 
         kwargs['page_obj'] = page
         kwargs['advertisements'] = page.object_list
         kwargs['is_paginated'] = page.has_other_pages()
-
         return super(UserProfileView, self).get_context_data(**kwargs)
 
 
