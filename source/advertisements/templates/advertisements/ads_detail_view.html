@@ -3,52 +3,55 @@
 {% block lists %}Детальная информация {{ advertisement.title }}{% endblock %}
 {% block content %}
     <br><br>
-    <ul class="list-group">
-        <li class="list-group-item active" aria-current="true">{{ advertisement.title }}</li>
-        {% if not advertisement.images %}
-            <img src="{% static 'img/no-image.png' %}" width="400" height="300" alt="Картинка">
+    <div class="card mb-3" style="max-width: 1200px;">
+        <div class="row g-0">
+            <div class="col-md-4">
+                {% if not advertisement.images %}
+                    <img src="{% static 'img/no-image.png' %}" class="img-fluid rounded-start" alt="Картинка">
 
-        {% else %}
-            <img src="{{ advertisement.images.url }}" width="400" height="300" alt="Картинка">
-        {% endif %}
-        <li class="list-group-item">Описание: {{ advertisement.description }}</li>
-        <li class="list-group-item">Цена: {{ advertisement.price }}</li>
-        <li class="list-group-item">Категория: {{ advertisement.category }}</li>
-        <li class="list-group-item">Статус: {{ advertisement.get_status_display }}</li>
-        <li class="list-group-item">Опубликовано: {{ advertisement.published_at }}</li>
+                {% else %}
+                    <img src="{{ advertisement.images.url }}" class="img-fluid rounded-start" alt="Картинка">
+                {% endif %}
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{ advertisement.title }}</h5><br>
+                    <p class="card-text">Описание: {{ advertisement.description }}</p>
+                    <p class="card-text">Категория: {{ advertisement.category }}</p>
+                    <p class="card-text">Цена: {{ advertisement.price }}</p>
+                    <p class="card-text">Номер телефона: {{ advertisement.author.profile.phone_number }}</p>
+                    <p class="like-counter"
+                       id="like-counter-{{ advertisement.pk }}">Лайков: {{ advertisement.likes.count }}</p>
 
-        <li class="list-group-item">Номер телефона: {{ advertisement.author.profile.phone_number }}</li>
-        <br>
-        <a href="{% url "advertisements:favorites_ads" advertisement.pk %}">
-            {% if advertisement.pk in request.session.favorite_ads %}
-                Удалить из избранного
-            {% else %}
-                Добавить в избранное
-            {% endif %}
-        </a>
-        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-            <button type="button" class="btn btn-warning"><a class="dropdown-item"
-                                                             href="{% url "advertisements:ads_update_view" advertisement.pk %}">Изменить</a>
-            </button>
-            <button type="button" class="btn btn-danger"><a class="dropdown-item"
-                                                            href="{% url "advertisements:ads_delete_view" advertisement.pk %}">Удалить</a>
-            </button>
-            <button type="submit" class="btn btn-primary"><a class="dropdown-item"
-                                                             href="{% url "advertisements:author_ads_view" advertisement.author.id %}">
-                {{ advertisement.author.first_name }} {{ advertisement.author.last_name }}</a>
-            </button>
+                    <br>
+
+                    <button type="button" class="btn btn-warning"><a class="dropdown-item"
+                                                                     href="{% url "advertisements:ads_update_view" advertisement.pk %}">Изменить</a>
+                    </button>
+                    <br><br>
+                    <button type="button" class="btn btn-danger"><a class="dropdown-item"
+                                                                    href="{% url "advertisements:ads_delete_view" advertisement.pk %}">Удалить</a>
+                    </button>
+                    <br>
+                    <a class="nav-link" href="{% url "advertisements:ads_comment_create" advertisement.pk %}">Добавить
+                        коммент</a>
+
+
+                </div>
+                <p class="card-text"><small
+                        class="text-muted">Опубликовано: {{ advertisement.published_at }}</small></p>
+            </div>
         </div>
+    </div>
 
+    <br>
+    {% if comments %}
+        <h3>Комментарии</h3>
+    {% else %}
+    {% endif %}
 
-        <br><br>
-        <a class="nav-link" href="{% url "advertisements:ads_comment_create" advertisement.pk %}">Добавить
-            коммент</a>
-        {% if comments %}
-            <h3>Комментарии</h3>
-        {% else %}
-        {% endif %}
-
-        {% for comment in comments %}
+    {% for comment in comments %}
+        <div class="container">
             <div class="card" style="width: 36rem;">
                 <div class="card-header">
                     Автор: {{ comment.author }}
@@ -58,7 +61,6 @@
                 </div>
                 <div class="card-footer text-muted">
                     {{ comment.created_at }}
-                    <br>
                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                         <button type="button" class="btn btn-warning"><a
                                 href="{% url "advertisements:comment_update_view" comment.id %}">Изменить</a></button>
@@ -67,8 +69,9 @@
                     </div>
                 </div>
             </div>
-            <br>
-        {% endfor %}
+        </div>
+        <br>
+    {% endfor %}
 
     </ul><br>
 {% endblock %}
