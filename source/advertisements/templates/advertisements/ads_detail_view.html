@@ -23,10 +23,12 @@
                        id="like-counter-{{ advertisement.pk }}">Лайков: {{ advertisement.likes.count }}</p>
 
                     <br>
+                    {% if perms.advertisement.change_advertisement %}
 
                     <button type="button" class="btn btn-warning"><a class="dropdown-item"
                                                                      href="{% url "advertisements:ads_update_view" advertisement.pk %}">Изменить</a>
                     </button>
+                    {% endif %}
                     <br><br>
                     <button type="button" class="btn btn-danger"><a class="dropdown-item"
                                                                     href="{% url "advertisements:ads_delete_view" advertisement.pk %}">Удалить</a>

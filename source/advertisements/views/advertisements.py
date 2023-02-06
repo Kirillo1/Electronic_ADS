@@ -1,12 +1,14 @@
 from http import HTTPStatus
 
 from django.contrib.auth import get_user_model
-from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.contrib.auth.mixins import (PermissionRequiredMixin,
+                                        LoginRequiredMixin)
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import View
-from django.views.generic import DetailView, CreateView, UpdateView, ListView, DeleteView
+from django.views.generic import (DetailView, CreateView,
+                                  UpdateView, ListView, DeleteView)
 
 from advertisements.forms import AdsForm
 from advertisements.models import Advertisement
@@ -43,7 +45,7 @@ class AdsDetailView(DetailView):
         return context
 
 
-class AdsCreateView(CreateView):
+class AdsCreateView(LoginRequiredMixin, CreateView):
     model = Advertisement
     form_class = AdsForm
     template_name = "advertisements/ads_create.html"
@@ -54,10 +56,14 @@ class AdsCreateView(CreateView):
         return super().form_valid(form)
 
 
-class AdsUpdateView(UpdateView):
+class AdsUpdateView(PermissionRequiredMixin, UpdateView):
+    permission_required = "advertisement.change_advertisement"
     form_class = AdsForm
     template_name = "advertisements/ads_update.html"
     model = Advertisement
+
+    def has_permission(self):
+        return super().has_permission() or self.request.user == self.get_object().author
 
     def get_success_url(self):
         return reverse('advertisements:ads_detail_view', kwargs={'pk': self.object.pk})
