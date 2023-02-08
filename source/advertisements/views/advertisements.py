@@ -57,7 +57,7 @@ class AdsCreateView(LoginRequiredMixin, CreateView):
 
 
 class AdsUpdateView(PermissionRequiredMixin, UpdateView):
-    permission_required = "advertisement.change_advertisement"
+    permission_required = "advertisements.change_advertisement"
     form_class = AdsForm
     template_name = "advertisements/ads_update.html"
     model = Advertisement
@@ -70,12 +70,13 @@ class AdsUpdateView(PermissionRequiredMixin, UpdateView):
 
 
 class AdsDeleteView(PermissionRequiredMixin, DeleteView):
+    permission_required = "advertisements.delete_advertisement"
     model = Advertisement
     template_name = 'advertisements/ads_delete_view.html'
     success_url = reverse_lazy('advertisements:index')
 
     def has_permission(self):
-        return self.request.user == self.get_object().author
+        return super().has_permission() or self.request.user == self.get_object().author
 
 
 class AuthorAdsView(DetailView):

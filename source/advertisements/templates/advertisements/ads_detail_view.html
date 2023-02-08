@@ -23,16 +23,17 @@
                        id="like-counter-{{ advertisement.pk }}">Лайков: {{ advertisement.likes.count }}</p>
 
                     <br>
-                    {% if perms.advertisement.change_advertisement %}
+                    {% if perms.advertisements.change_advertisement or advertisement.author == user%}
 
-                    <button type="button" class="btn btn-warning"><a class="dropdown-item"
-                                                                     href="{% url "advertisements:ads_update_view" advertisement.pk %}">Изменить</a>
-                    </button>
+                        <button type="button" class="btn btn-warning"><a class="dropdown-item"
+                                                                         href="{% url "advertisements:ads_update_view" advertisement.pk %}">Изменить</a>
+                        </button>
+
+                        <br><br>
+                        <button type="button" class="btn btn-danger"><a class="dropdown-item"
+                                                                        href="{% url "advertisements:ads_delete_view" advertisement.pk %}">Удалить</a>
+                        </button>
                     {% endif %}
-                    <br><br>
-                    <button type="button" class="btn btn-danger"><a class="dropdown-item"
-                                                                    href="{% url "advertisements:ads_delete_view" advertisement.pk %}">Удалить</a>
-                    </button>
                     <br>
                     <a class="nav-link" href="{% url "advertisements:ads_comment_create" advertisement.pk %}">Добавить
                         коммент</a>
@@ -63,10 +64,12 @@
                 <div class="card-footer text-muted">
                     {{ comment.created_at }}
                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                        {% if perms.advertisements.change_comment or comment.author == user%}
                         <button type="button" class="btn btn-warning"><a
                                 href="{% url "advertisements:comment_update_view" comment.id %}">Изменить</a></button>
                         <button type="button" class="btn btn-danger"><a
                                 href="{% url "advertisements:comment_delete_view" comment.id %}">Удалить</a></button>
+                        {% endif %}
                     </div>
                 </div>
             </div>
