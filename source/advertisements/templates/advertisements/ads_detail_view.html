@@ -37,6 +37,7 @@
                     <br>
                     <a class="nav-link" href="{% url "advertisements:ads_comment_create" advertisement.pk %}">Добавить
                         коммент</a>
+                                    <a class="nav-link" href="{% url "accounts:user_profile" advertisement.author_id %}">Страница {{ advertisement.author }}</a>
 
 
                 </div>
